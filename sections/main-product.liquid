@@ -37,6 +37,11 @@
         padding-bottom: {{ section.settings.padding_bottom }}px;
       }
     }
+
+    .section-{{ section.id }}-padding {
+      --product-gallery-arrows-desktop-display: {% if section.settings.desktop_arrows_position == 'hidden' %}none{% else %}flex{% endif %};
+      --product-gallery-arrows-mobile-display: {% if section.settings.mobile_arrows_position == 'hidden' %}none{% else %}flex{% endif %};
+    }
   {%- endstyle -%}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
@@ -2190,6 +2195,50 @@
       ],
       "default": "hide",
       "label": "t:sections.main-product.settings.mobile_thumbnails.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "media_arrows_color_scheme",
+      "label": "t:sections.main-product.settings.media_arrows_color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "media_arrows_transparent",
+      "default": false,
+      "label": "t:sections.main-product.settings.media_arrows_transparent.label"
+    },
+    {
+      "type": "select",
+      "id": "desktop_arrows_position",
+      "options": [
+        {
+          "value": "hidden",
+          "label": "t:sections.main-product.settings.desktop_arrows_position.options__1.label"
+        },
+        {
+          "value": "overlay",
+          "label": "t:sections.main-product.settings.desktop_arrows_position.options__2.label"
+        }
+      ],
+      "default": "hidden",
+      "label": "t:sections.main-product.settings.desktop_arrows_position.label"
+    },
+    {
+      "type": "select",
+      "id": "mobile_arrows_position",
+      "options": [
+        {
+          "value": "hidden",
+          "label": "t:sections.main-product.settings.mobile_arrows_position.options__1.label"
+        },
+        {
+          "value": "overlay",
+          "label": "t:sections.main-product.settings.mobile_arrows_position.options__2.label"
+        }
+      ],
+      "default": "hidden",
+      "label": "t:sections.main-product.settings.mobile_arrows_position.label"
     },
     {
       "type": "select",

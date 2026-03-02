@@ -125,7 +125,9 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+    <div
+      class="slider-buttons product-gallery__controls product-gallery__controls--desktop-{{ section.settings.desktop_arrows_position }} product-gallery__controls--mobile-{{ section.settings.mobile_arrows_position }} quick-add-hidden color-{{ section.settings.media_arrows_color_scheme }}{% if section.settings.media_arrows_transparent %} product-gallery__controls--transparent{% endif %}{% if hide_mobile_slider %} small-hide{% endif %}"
+    >
       <button
         type="button"
         class="slider-button slider-button--prev"

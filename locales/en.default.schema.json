@@ -2401,6 +2401,30 @@
             "label": "Hide thumbnails"
           }
         },
+        "media_arrows_color_scheme": {
+          "label": "Media arrows color scheme"
+        },
+        "media_arrows_transparent": {
+          "label": "Transparent media arrows"
+        },
+        "desktop_arrows_position": {
+          "label": "Desktop arrows",
+          "options__1": {
+            "label": "Hidden"
+          },
+          "options__2": {
+            "label": "Overlay"
+          }
+        },
+        "mobile_arrows_position": {
+          "label": "Mobile arrows",
+          "options__1": {
+            "label": "Hidden"
+          },
+          "options__2": {
+            "label": "Overlay"
+          }
+        },
         "hide_variants": {
           "label": "Hide other variant media after one is selected"
         },
