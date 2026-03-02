@@ -14,6 +14,8 @@
   - constrain_to_viewport: {Boolean} Force media height to fit within viewport
   - media_fit: {String} Method ("contain" or "cover") to fit image into container
   - media_width: {Float} The width percentage that the media column occupies on desktop.
+  - media_ratio_desktop: {String} Desktop media ratio ('adapt', 'portrait', 'square', 'landscape')
+  - media_ratio_mobile: {String} Mobile media ratio ('adapt', 'portrait', 'square', 'landscape')
   - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
 
   Usage:
@@ -43,6 +45,27 @@
   if media.media_type == 'image'
     assign image_class = 'image-magnify-' | append: section.settings.image_zoom
   endif
+
+  assign fixed_ratio_desktop = ''
+  case media_ratio_desktop
+    when 'portrait'
+      assign fixed_ratio_desktop = 0.8
+    when 'square'
+      assign fixed_ratio_desktop = 1
+    when 'landscape'
+      assign fixed_ratio_desktop = 1.333333
+  endcase
+
+  assign fixed_ratio_mobile = ''
+  case media_ratio_mobile
+    when 'portrait'
+      assign fixed_ratio_mobile = 0.8
+    when 'square'
+      assign fixed_ratio_mobile = 1
+    when 'landscape'
+      assign fixed_ratio_mobile = 1.333333
+  endcase
+
 -%}
 
 {%- capture sizes -%}
@@ -50,8 +73,8 @@
 {%- endcapture -%}
 
 <div
-  class="product-media-container media-type-{{ media.media_type }} media-fit-{{ media_fit }} global-media-settings gradient{% if constrain_to_viewport %} constrain-height{% endif %}"
-  style="--ratio: {{ media.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};"
+  class="product-media-container media-type-{{ media.media_type }} media-fit-{{ media_fit }} global-media-settings gradient{% if constrain_to_viewport %} constrain-height{% endif %}{% if fixed_ratio_desktop != blank %} product-media-container--desktop-fixed-ratio{% endif %}{% if fixed_ratio_mobile != blank %} product-media-container--mobile-fixed-ratio{% endif %}"
+  style="--ratio: {{ media.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};{% if fixed_ratio_desktop != blank %} --fixed-ratio-desktop: {{ fixed_ratio_desktop }};{% endif %}{% if fixed_ratio_mobile != blank %} --fixed-ratio-mobile: {{ fixed_ratio_mobile }};{% endif %}"
 >
   <modal-opener
     class="product__modal-opener product__modal-opener--{{ media.media_type }}"
