@@ -2401,8 +2401,57 @@
             "label": "Hide thumbnails"
           }
         },
+        "thumbnails_aspect_ratio": {
+          "label": "Thumbnail aspect ratio",
+          "options__1": {
+            "label": "Original"
+          },
+          "options__2": {
+            "label": "Square"
+          }
+        },
         "hide_variants": {
           "label": "Hide other variant media after one is selected"
+        },
+        "display_first_variant_image_as_featured": {
+          "label": "Use first variant image as featured media"
+        },
+        "disable_prepend_active_media": {
+          "label": "Keep media order when changing variants"
+        },
+        "display_section_id": {
+          "label": "Section anchor ID",
+          "info": "Optional ID attribute for linking directly to this product section."
+        },
+        "trust_badge_image": {
+          "label": "Trust badge image"
+        },
+        "trust_badge_position": {
+          "label": "Trust badge position",
+          "options__1": {
+            "label": "Top right"
+          },
+          "options__2": {
+            "label": "Top left"
+          },
+          "options__3": {
+            "label": "Bottom right"
+          },
+          "options__4": {
+            "label": "Bottom left"
+          }
+        },
+        "trust_badge_size": {
+          "label": "Trust badge size",
+          "options__1": {
+            "label": "Small"
+          },
+          "options__2": {
+            "label": "Medium"
+          },
+          "options__3": {
+            "label": "Large"
+          }
         },
         "enable_video_looping": {
           "label": "Loop video"
