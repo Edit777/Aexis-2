@@ -207,8 +207,7 @@
   -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider thumbnail-slider--align-{{ section.settings.thumbnail_alignment }} slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
-      style="--thumbnails-per-view-mobile: {{ section.settings.thumbnails_per_view_mobile }}; --thumbnails-per-view-desktop: {{ section.settings.thumbnails_per_view_desktop }};"
+      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
     >
       <button
         type="button"
