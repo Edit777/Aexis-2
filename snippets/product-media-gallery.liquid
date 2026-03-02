@@ -81,6 +81,8 @@
             media_width: media_width,
             media_fit: section.settings.media_fit,
             constrain_to_viewport: section.settings.constrain_to_viewport,
+            media_ratio_desktop: section.settings.media_ratio_desktop,
+            media_ratio_mobile: section.settings.media_ratio_mobile,
             lazy_load: false
           %}
         </li>
@@ -119,6 +121,8 @@
               media_width: media_width,
               media_fit: section.settings.media_fit,
               constrain_to_viewport: section.settings.constrain_to_viewport,
+              media_ratio_desktop: section.settings.media_ratio_desktop,
+              media_ratio_mobile: section.settings.media_ratio_mobile,
               lazy_load: lazy_load
             %}
           </li>
@@ -183,7 +187,7 @@
   -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
+      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
     >
       <button
         type="button"
