@@ -8,24 +8,40 @@ if (!customElements.get('media-gallery')) {
           liveRegion: this.querySelector('[id^="GalleryStatus"]'),
           viewer: this.querySelector('[id^="GalleryViewer"]'),
           thumbnails: this.querySelector('[id^="GalleryThumbnails"]'),
+          mediaDots: this.querySelectorAll('[data-media-dot]'),
         };
         this.mql = window.matchMedia('(min-width: 750px)');
-        if (!this.elements.thumbnails) return;
 
         this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
-        this.elements.thumbnails.querySelectorAll('[data-target]').forEach((mediaToSwitch) => {
-          mediaToSwitch
-            .querySelector('button')
-            .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
+        if (this.elements.thumbnails) {
+          this.elements.thumbnails.querySelectorAll('[data-target]').forEach((mediaToSwitch) => {
+            mediaToSwitch
+              .querySelector('button')
+              .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
+          });
+        }
+
+        this.elements.mediaDots.forEach((dot) => {
+          dot.addEventListener('click', (event) => {
+            event.preventDefault();
+            const dotIndex = Number(dot.dataset.mediaDot) - 1;
+            const targetSlide = this.elements.viewer?.sliderItemsToShow?.[dotIndex];
+            if (!targetSlide) return;
+            this.elements.viewer.slider.scrollTo({ left: targetSlide.offsetLeft, behavior: 'smooth' });
+          });
         });
+        this.updateMediaDots(1);
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
       }
 
       onSlideChanged(event) {
-        const thumbnail = this.elements.thumbnails.querySelector(
-          `[data-target="${event.detail.currentElement.dataset.mediaId}"]`
-        );
-        this.setActiveThumbnail(thumbnail);
+        if (this.elements.thumbnails) {
+          const thumbnail = this.elements.thumbnails.querySelector(
+            `[data-target="${event.detail.currentElement.dataset.mediaId}"]`
+          );
+          this.setActiveThumbnail(thumbnail);
+        }
+        this.updateMediaDots(event.detail.currentPage);
       }
 
       setActiveMedia(mediaId, prepend) {
@@ -64,10 +80,17 @@ if (!customElements.get('media-gallery')) {
         });
         this.playActiveMedia(activeMedia);
 
-        if (!this.elements.thumbnails) return;
+        if (!this.elements.thumbnails) {
+          const activeIndex = Array.from(this.elements.viewer.querySelectorAll('[data-media-id]')).findIndex((media) =>
+            media.classList.contains('is-active')
+          );
+          this.updateMediaDots(activeIndex + 1);
+          return;
+        }
         const activeThumbnail = this.elements.thumbnails.querySelector(`[data-target="${mediaId}"]`);
         this.setActiveThumbnail(activeThumbnail);
         this.announceLiveRegion(activeMedia, activeThumbnail.dataset.mediaPosition);
+        this.updateMediaDots(Number(activeThumbnail.dataset.mediaPosition));
       }
 
       setActiveThumbnail(thumbnail) {
@@ -80,6 +103,20 @@ if (!customElements.get('media-gallery')) {
         if (this.elements.thumbnails.isSlideVisible(thumbnail, 10)) return;
 
         this.elements.thumbnails.slider.scrollTo({ left: thumbnail.offsetLeft });
+      }
+
+
+      updateMediaDots(position) {
+        if (!this.elements.mediaDots?.length) return;
+        this.elements.mediaDots.forEach((dot, index) => {
+          const isActive = index + 1 === position;
+          dot.classList.toggle('slider-counter__link--active', isActive);
+          if (isActive) {
+            dot.setAttribute('aria-current', true);
+          } else {
+            dot.removeAttribute('aria-current');
+          }
+        });
       }
 
       announceLiveRegion(activeItem, position) {
