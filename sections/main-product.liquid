@@ -1,14 +1,16 @@
-<product-info
-  id="MainProduct-{{ section.id }}"
-  class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
-  data-section="{{ section.id }}"
-  data-product-id="{{ product.id }}"
-  data-update-url="true"
-  data-url="{{ product.url }}"
-  {% if section.settings.image_zoom == 'hover' %}
-    data-zoom-on-hover
-  {% endif %}
->
+<section {% if section.settings.display_section_id != blank %}id="{{ section.settings.display_section_id | escape }}"{% endif %}>
+  <product-info
+    id="MainProduct-{{ section.id }}"
+    class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
+    data-section="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+    data-update-url="true"
+    data-url="{{ product.url }}"
+    data-disable-prepend-active-media="{{ section.settings.disable_prepend_active_media }}"
+    {% if section.settings.image_zoom == 'hover' %}
+      data-zoom-on-hover
+    {% endif %}
+  >
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -736,7 +738,8 @@
       {{ product | structured_data }}
     </script>
   </div>
-</product-info>
+  </product-info>
+</section>
 
 {% schema %}
 {
@@ -2241,6 +2244,22 @@
     },
     {
       "type": "select",
+      "id": "thumbnails_aspect_ratio",
+      "options": [
+        {
+          "value": "original",
+          "label": "t:sections.main-product.settings.thumbnails_aspect_ratio.options__1.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-product.settings.thumbnails_aspect_ratio.options__2.label"
+        }
+      ],
+      "default": "original",
+      "label": "t:sections.main-product.settings.thumbnails_aspect_ratio.label"
+    },
+    {
+      "type": "select",
       "id": "media_position",
       "options": [
         {
@@ -2280,6 +2299,73 @@
       "id": "hide_variants",
       "default": false,
       "label": "t:sections.main-product.settings.hide_variants.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_first_variant_image_as_featured",
+      "default": true,
+      "label": "t:sections.main-product.settings.display_first_variant_image_as_featured.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_prepend_active_media",
+      "default": false,
+      "label": "t:sections.main-product.settings.disable_prepend_active_media.label"
+    },
+    {
+      "type": "text",
+      "id": "display_section_id",
+      "label": "t:sections.main-product.settings.display_section_id.label",
+      "info": "t:sections.main-product.settings.display_section_id.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_badge_image",
+      "label": "t:sections.main-product.settings.trust_badge_image.label"
+    },
+    {
+      "type": "select",
+      "id": "trust_badge_position",
+      "options": [
+        {
+          "value": "top_right",
+          "label": "t:sections.main-product.settings.trust_badge_position.options__1.label"
+        },
+        {
+          "value": "top_left",
+          "label": "t:sections.main-product.settings.trust_badge_position.options__2.label"
+        },
+        {
+          "value": "bottom_right",
+          "label": "t:sections.main-product.settings.trust_badge_position.options__3.label"
+        },
+        {
+          "value": "bottom_left",
+          "label": "t:sections.main-product.settings.trust_badge_position.options__4.label"
+        }
+      ],
+      "default": "top_right",
+      "label": "t:sections.main-product.settings.trust_badge_position.label"
+    },
+    {
+      "type": "select",
+      "id": "trust_badge_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.main-product.settings.trust_badge_size.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-product.settings.trust_badge_size.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-product.settings.trust_badge_size.options__3.label"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.main-product.settings.trust_badge_size.label"
     },
     {
       "type": "checkbox",
