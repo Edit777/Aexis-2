@@ -2344,6 +2344,27 @@
             "label": "Thumbnail carousel"
           }
         },
+        "desktop_thumbnails_position": {
+          "label": "Desktop thumbnails position",
+          "options__1": {
+            "label": "Left"
+          },
+          "options__2": {
+            "label": "Bottom"
+          },
+          "options__3": {
+            "label": "Right"
+          }
+        },
+        "desktop_horizontal_thumbnails_count": {
+          "label": "Desktop thumbnail count"
+        },
+        "desktop_vertical_thumbnails_width": {
+          "label": "Desktop thumbnail rail width"
+        },
+        "hide_vertical_thumbnail_arrows": {
+          "label": "Hide desktop vertical thumbnail arrows"
+        },
         "constrain_to_viewport": {
           "label": "Constrain to screen height"
         },
@@ -2401,29 +2422,57 @@
             "label": "Hide thumbnails"
           }
         },
-        "mobile_media_corner_radius": {
-          "label": "Mobile media corner radius"
-        },
-        "mobile_media_spacing_between_slides": {
-          "label": "Mobile spacing between slides"
-        },
-        "mobile_scroll_padding_percentage": {
-          "label": "Mobile scroll padding (%)"
-        },
-        "mobile_scroll_padding_pixels": {
-          "label": "Mobile scroll padding (px)"
-        },
-        "mobile_first_last_slide_outer_spacing": {
-          "label": "Add first/last slide outer spacing"
-        },
-        "mobile_slide_container_width": {
-          "label": "Mobile slide container width"
-        },
-        "mobile_inner_slide_content_width": {
-          "label": "Mobile inner slide content width"
+        "thumbnails_aspect_ratio": {
+          "label": "Thumbnail aspect ratio",
+          "options__1": {
+            "label": "Original"
+          },
+          "options__2": {
+            "label": "Square"
+          }
         },
         "hide_variants": {
           "label": "Hide other variant media after one is selected"
+        },
+        "display_first_variant_image_as_featured": {
+          "label": "Use first variant image as featured media"
+        },
+        "disable_prepend_active_media": {
+          "label": "Keep media order when changing variants"
+        },
+        "display_section_id": {
+          "label": "Section anchor ID",
+          "info": "Optional ID attribute for linking directly to this product section."
+        },
+        "trust_badge_image": {
+          "label": "Trust badge image"
+        },
+        "trust_badge_position": {
+          "label": "Trust badge position",
+          "options__1": {
+            "label": "Top right"
+          },
+          "options__2": {
+            "label": "Top left"
+          },
+          "options__3": {
+            "label": "Bottom right"
+          },
+          "options__4": {
+            "label": "Bottom left"
+          }
+        },
+        "trust_badge_size": {
+          "label": "Trust badge size",
+          "options__1": {
+            "label": "Small"
+          },
+          "options__2": {
+            "label": "Medium"
+          },
+          "options__3": {
+            "label": "Large"
+          }
         },
         "enable_video_looping": {
           "label": "Loop video"
