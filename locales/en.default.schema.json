@@ -2401,6 +2401,27 @@
             "label": "Hide thumbnails"
           }
         },
+        "mobile_media_corner_radius": {
+          "label": "Mobile media corner radius"
+        },
+        "mobile_media_spacing_between_slides": {
+          "label": "Mobile spacing between slides"
+        },
+        "mobile_scroll_padding_percentage": {
+          "label": "Mobile scroll padding (%)"
+        },
+        "mobile_scroll_padding_pixels": {
+          "label": "Mobile scroll padding (px)"
+        },
+        "mobile_first_last_slide_outer_spacing": {
+          "label": "Add first/last slide outer spacing"
+        },
+        "mobile_slide_container_width": {
+          "label": "Mobile slide container width"
+        },
+        "mobile_inner_slide_content_width": {
+          "label": "Mobile inner slide content width"
+        },
         "hide_variants": {
           "label": "Hide other variant media after one is selected"
         },

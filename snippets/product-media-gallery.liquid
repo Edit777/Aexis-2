@@ -40,14 +40,26 @@
   elsif section.settings.media_size == 'small'
     assign media_width = 0.45
   endif
+
+  assign mobile_outer_spacing = 0
+  if section.settings.mobile_first_last_slide_outer_spacing
+    assign mobile_outer_spacing = 1
+  endif
 -%}
 
 <media-gallery
   id="MediaGallery-{{ section.id }}"
+  class="product__media-gallery-mobile-controls{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
+  style="
+    --mobile-media-corner-radius: {{ section.settings.mobile_media_corner_radius }};
+    --mobile-spacing-between-slides: {{ section.settings.mobile_media_spacing_between_slides }};
+    --mobile-scroll-padding-percentage: {{ section.settings.mobile_scroll_padding_percentage }};
+    --mobile-scroll-padding-pixels: {{ section.settings.mobile_scroll_padding_pixels }};
+    --mobile-slide-container-width: {{ section.settings.mobile_slide_container_width }};
+    --mobile-inner-slide-content-width: {{ section.settings.mobile_inner_slide_content_width }};
+    --mobile-use-outer-slide-spacing: {{ mobile_outer_spacing }};
+  "
   role="region"
-  {% if section.settings.enable_sticky_info %}
-    class="product__column-sticky"
-  {% endif %}
   aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
   data-desktop-layout="{{ section.settings.gallery_layout }}"
 >
