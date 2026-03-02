@@ -74,7 +74,7 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
-    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} product--thumbnail-controls-{{ section.settings.thumbnail_navigation }} product--media-pagination-{{ section.settings.media_pagination_type }} product--media-pagination-position-{{ section.settings.media_pagination_position }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
@@ -2190,6 +2190,133 @@
       ],
       "default": "hide",
       "label": "t:sections.main-product.settings.mobile_thumbnails.label"
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_navigation",
+      "label": "Thumbnail navigation",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "always",
+          "label": "Always show arrows"
+        },
+        {
+          "value": "none",
+          "label": "Hide arrows"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_alignment",
+      "label": "Thumbnail alignment",
+      "options": [
+        { "value": "start", "label": "Start" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "thumbnails_per_view_desktop",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 5,
+      "label": "Thumbnails per view (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "thumbnails_per_view_mobile",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Thumbnails per view (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Media slider controls"
+    },
+    {
+      "type": "select",
+      "id": "media_pagination_type",
+      "label": "Pagination type",
+      "options": [
+        { "value": "counter", "label": "Numeric" },
+        { "value": "dots", "label": "Dots" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "counter"
+    },
+    {
+      "type": "select",
+      "id": "media_pagination_position",
+      "label": "Pagination position",
+      "options": [
+        { "value": "below", "label": "Below media" },
+        { "value": "overlay", "label": "Over media" }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_media_arrows",
+      "default": true,
+      "label": "Show media arrows on mobile"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio_desktop",
+      "label": "Desktop media ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "media_ratio_mobile",
+      "label": "Mobile media ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "adapt"
     },
     {
       "type": "select",

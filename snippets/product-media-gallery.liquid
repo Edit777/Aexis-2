@@ -40,6 +40,17 @@
   elsif section.settings.media_size == 'small'
     assign media_width = 0.45
   endif
+
+  assign show_media_prev_next = section.settings.show_mobile_media_arrows
+  assign show_media_counter = false
+  assign show_media_dots = false
+
+  case section.settings.media_pagination_type
+    when 'counter'
+      assign show_media_counter = true
+    when 'dots'
+      assign show_media_dots = true
+  endcase
 -%}
 
 <media-gallery
@@ -81,6 +92,8 @@
             media_width: media_width,
             media_fit: section.settings.media_fit,
             constrain_to_viewport: section.settings.constrain_to_viewport,
+            media_ratio_desktop: section.settings.media_ratio_desktop,
+            media_ratio_mobile: section.settings.media_ratio_mobile,
             lazy_load: false
           %}
         </li>
@@ -119,16 +132,18 @@
               media_width: media_width,
               media_fit: section.settings.media_fit,
               constrain_to_viewport: section.settings.constrain_to_viewport,
+              media_ratio_desktop: section.settings.media_ratio_desktop,
+              media_ratio_mobile: section.settings.media_ratio_mobile,
               lazy_load: lazy_load
             %}
           </li>
         {%- endunless -%}
       {%- endfor -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}">
+    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}{% unless show_media_prev_next %} product__media-controls--hide-arrows{% endunless %}{% if section.settings.media_pagination_position == 'overlay' %} product__media-controls--overlay{% endif %}">
       <button
         type="button"
-        class="slider-button slider-button--prev"
+        class="slider-button slider-button--prev{% unless show_media_prev_next %} hidden{% endunless %}"
         name="previous"
         aria-label="{{ 'general.slider.previous_slide' | t }}"
       >
@@ -136,15 +151,31 @@
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
       </button>
-      <div class="slider-counter caption">
-        <span class="slider-counter--current">1</span>
-        <span aria-hidden="true"> / </span>
-        <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-        <span class="slider-counter--total">{{ media_count }}</span>
-      </div>
+      {%- if show_media_counter -%}
+        <div class="slider-counter caption">
+          <span class="slider-counter--current">1</span>
+          <span aria-hidden="true"> / </span>
+          <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+          <span class="slider-counter--total">{{ media_count }}</span>
+        </div>
+      {%- elsif show_media_dots -%}
+        <div class="slider-counter slider-counter--dots product__media-dots" role="group" aria-label="Product media pagination">
+          {%- for i in (1..media_count) -%}
+            <button
+              type="button"
+              class="slider-counter__link slider-counter__link--dots{% if forloop.first %} slider-counter__link--active{% endif %}"
+              data-media-dot="{{ forloop.index }}"
+              aria-label="{{ 'products.product.media.open_media' | t: index: forloop.index }}"
+              {% if forloop.first %}aria-current="true"{% endif %}
+            >
+              <span class="dot"></span>
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
       <button
         type="button"
-        class="slider-button slider-button--next"
+        class="slider-button slider-button--next{% unless show_media_prev_next %} hidden{% endunless %}"
         name="next"
         aria-label="{{ 'general.slider.next_slide' | t }}"
       >
@@ -183,11 +214,12 @@
   -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}"
+      class="thumbnail-slider thumbnail-slider--align-{{ section.settings.thumbnail_alignment }} slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
+      style="--thumbnails-per-view-mobile: {{ section.settings.thumbnails_per_view_mobile }}; --thumbnails-per-view-desktop: {{ section.settings.thumbnails_per_view_desktop }};"
     >
       <button
         type="button"
-        class="slider-button slider-button--prev{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+        class="slider-button slider-button--prev{% unless section.settings.thumbnail_navigation == 'always' %}{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}{% endunless %}"
         name="previous"
         aria-label="{{ 'general.slider.previous_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
@@ -317,7 +349,7 @@
       </ul>
       <button
         type="button"
-        class="slider-button slider-button--next{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}"
+        class="slider-button slider-button--next{% unless section.settings.thumbnail_navigation == 'always' %}{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}{% endunless %}"
         name="next"
         aria-label="{{ 'general.slider.next_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
