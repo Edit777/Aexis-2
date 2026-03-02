@@ -10,6 +10,8 @@ if (!customElements.get('media-gallery')) {
           thumbnails: this.querySelector('[id^="GalleryThumbnails"]'),
         };
         this.mql = window.matchMedia('(min-width: 750px)');
+        this.isVerticalThumbnailDesktop =
+          this.elements.thumbnails?.dataset.thumbnailSliderOrientation === 'vertical';
         if (!this.elements.thumbnails) return;
 
         this.elements.viewer.addEventListener('slideChanged', debounce(this.onSlideChanged.bind(this), 500));
@@ -18,7 +20,33 @@ if (!customElements.get('media-gallery')) {
             .querySelector('button')
             .addEventListener('click', this.setActiveMedia.bind(this, mediaToSwitch.dataset.target, false));
         });
+        if (this.isVerticalThumbnailDesktop) {
+          this.thumbnailList = this.elements.thumbnails.querySelector('[id^="Slider-"]');
+          this.verticalPrevButton = this.elements.thumbnails.querySelector('button[name="previous"]');
+          this.verticalNextButton = this.elements.thumbnails.querySelector('button[name="next"]');
+          this.verticalStep = Number(this.verticalNextButton?.dataset.step || 1);
+          this.verticalPrevButton?.addEventListener('click', this.onVerticalThumbnailButtonClick.bind(this));
+          this.verticalNextButton?.addEventListener('click', this.onVerticalThumbnailButtonClick.bind(this));
+          this.thumbnailList?.addEventListener('scroll', debounce(this.updateVerticalThumbnailButtons.bind(this), 100));
+          this.updateVerticalThumbnailButtons();
+        }
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+
+        this.initializeMobileLayoutRefresh();
+      }
+
+      initializeMobileLayoutRefresh() {
+        if (!this.elements.viewer?.slider || typeof ResizeObserver === 'undefined') return;
+        const refreshSliderPages = debounce(() => {
+          if (this.mql.matches || !this.elements.viewer?.slider) return;
+          this.elements.viewer.resetPages();
+        }, 150);
+        this.mobileLayoutObserver = new ResizeObserver(() => refreshSliderPages());
+        this.mobileLayoutObserver.observe(this.elements.viewer);
+      }
+
+      disconnectedCallback() {
+        this.mobileLayoutObserver?.disconnect();
       }
 
       onSlideChanged(event) {
@@ -77,9 +105,50 @@ if (!customElements.get('media-gallery')) {
           .querySelectorAll('button')
           .forEach((element) => element.removeAttribute('aria-current'));
         thumbnail.querySelector('button').setAttribute('aria-current', true);
+        if (this.isVerticalThumbnailDesktop && this.mql.matches && this.thumbnailList) {
+          this.thumbnailList.scrollTo({ top: thumbnail.offsetTop });
+          this.updateVerticalThumbnailButtons();
+          return;
+        }
+
         if (this.elements.thumbnails.isSlideVisible(thumbnail, 10)) return;
 
         this.elements.thumbnails.slider.scrollTo({ left: thumbnail.offsetLeft });
+      }
+
+      onVerticalThumbnailButtonClick(event) {
+        event.preventDefault();
+        if (!this.mql.matches || !this.thumbnailList) return;
+
+        const direction = event.currentTarget.name === 'next' ? 1 : -1;
+        const firstVisibleThumbnail = this.thumbnailList.querySelector('[id^="Slide-"]');
+        const itemHeight = firstVisibleThumbnail?.clientHeight || 0;
+        const thumbnailGap = 10;
+        const scrollStep = (itemHeight + thumbnailGap) * this.verticalStep;
+
+        this.thumbnailList.scrollBy({ top: direction * scrollStep });
+        window.setTimeout(() => this.updateVerticalThumbnailButtons(), 150);
+      }
+
+      updateVerticalThumbnailButtons() {
+        if (!this.mql.matches || !this.thumbnailList) return;
+
+        const maxScrollTop = this.thumbnailList.scrollHeight - this.thumbnailList.clientHeight;
+        if (this.verticalPrevButton) {
+          if (this.thumbnailList.scrollTop <= 0) {
+            this.verticalPrevButton.setAttribute('disabled', 'disabled');
+          } else {
+            this.verticalPrevButton.removeAttribute('disabled');
+          }
+        }
+
+        if (this.verticalNextButton) {
+          if (this.thumbnailList.scrollTop >= maxScrollTop - 1) {
+            this.verticalNextButton.setAttribute('disabled', 'disabled');
+          } else {
+            this.verticalNextButton.removeAttribute('disabled');
+          }
+        }
       }
 
       announceLiveRegion(activeItem, position) {

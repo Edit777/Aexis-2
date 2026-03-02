@@ -2344,6 +2344,27 @@
             "label": "Thumbnail carousel"
           }
         },
+        "desktop_thumbnails_position": {
+          "label": "Desktop thumbnails position",
+          "options__1": {
+            "label": "Left"
+          },
+          "options__2": {
+            "label": "Bottom"
+          },
+          "options__3": {
+            "label": "Right"
+          }
+        },
+        "desktop_horizontal_thumbnails_count": {
+          "label": "Desktop thumbnail count"
+        },
+        "desktop_vertical_thumbnails_width": {
+          "label": "Desktop thumbnail rail width"
+        },
+        "hide_vertical_thumbnail_arrows": {
+          "label": "Hide desktop vertical thumbnail arrows"
+        },
         "constrain_to_viewport": {
           "label": "Constrain to screen height"
         },
@@ -2401,32 +2422,57 @@
             "label": "Hide thumbnails"
           }
         },
-        "media_arrows_color_scheme": {
-          "label": "Media arrows color scheme"
-        },
-        "media_arrows_transparent": {
-          "label": "Transparent media arrows"
-        },
-        "desktop_arrows_position": {
-          "label": "Desktop arrows",
+        "thumbnails_aspect_ratio": {
+          "label": "Thumbnail aspect ratio",
           "options__1": {
-            "label": "Hidden"
+            "label": "Original"
           },
           "options__2": {
-            "label": "Overlay"
-          }
-        },
-        "mobile_arrows_position": {
-          "label": "Mobile arrows",
-          "options__1": {
-            "label": "Hidden"
-          },
-          "options__2": {
-            "label": "Overlay"
+            "label": "Square"
           }
         },
         "hide_variants": {
           "label": "Hide other variant media after one is selected"
+        },
+        "display_first_variant_image_as_featured": {
+          "label": "Use first variant image as featured media"
+        },
+        "disable_prepend_active_media": {
+          "label": "Keep media order when changing variants"
+        },
+        "display_section_id": {
+          "label": "Section anchor ID",
+          "info": "Optional ID attribute for linking directly to this product section."
+        },
+        "trust_badge_image": {
+          "label": "Trust badge image"
+        },
+        "trust_badge_position": {
+          "label": "Trust badge position",
+          "options__1": {
+            "label": "Top right"
+          },
+          "options__2": {
+            "label": "Top left"
+          },
+          "options__3": {
+            "label": "Bottom right"
+          },
+          "options__4": {
+            "label": "Bottom left"
+          }
+        },
+        "trust_badge_size": {
+          "label": "Trust badge size",
+          "options__1": {
+            "label": "Small"
+          },
+          "options__2": {
+            "label": "Medium"
+          },
+          "options__3": {
+            "label": "Large"
+          }
         },
         "enable_video_looping": {
           "label": "Loop video"

@@ -301,7 +301,7 @@ if (!customElements.get('product-info')) {
         // set featured media as active in the media gallery
         this.querySelector(`media-gallery`)?.setActiveMedia?.(
           `${this.dataset.section}-${variantFeaturedMediaId}`,
-          true
+          this.dataset.disablePrependActiveMedia !== 'true'
         );
 
         // update media modal
