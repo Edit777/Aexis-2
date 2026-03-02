@@ -31,6 +31,22 @@ if (!customElements.get('media-gallery')) {
           this.updateVerticalThumbnailButtons();
         }
         if (this.dataset.desktopLayout.includes('thumbnail') && this.mql.matches) this.removeListSemantic();
+
+        this.initializeMobileLayoutRefresh();
+      }
+
+      initializeMobileLayoutRefresh() {
+        if (!this.elements.viewer?.slider || typeof ResizeObserver === 'undefined') return;
+        const refreshSliderPages = debounce(() => {
+          if (this.mql.matches || !this.elements.viewer?.slider) return;
+          this.elements.viewer.resetPages();
+        }, 150);
+        this.mobileLayoutObserver = new ResizeObserver(() => refreshSliderPages());
+        this.mobileLayoutObserver.observe(this.elements.viewer);
+      }
+
+      disconnectedCallback() {
+        this.mobileLayoutObserver?.disconnect();
       }
 
       onSlideChanged(event) {
