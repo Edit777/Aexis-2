@@ -42,14 +42,8 @@
   endif
 
   assign show_media_prev_next = section.settings.show_mobile_media_arrows
-  assign show_media_counter = false
-  assign show_media_dots = false
-
-  if section.settings.media_pagination_type == 'counter'
-    assign show_media_counter = true
-  elsif section.settings.media_pagination_type == 'dots'
-    assign show_media_dots = true
-  endif
+  assign show_media_counter = section.settings.media_pagination_type == 'counter'
+  assign show_media_dots = section.settings.media_pagination_type == 'dots'
 -%}
 
 <media-gallery
@@ -213,8 +207,7 @@
   -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider thumbnail-slider--align-{{ section.settings.thumbnail_alignment }} slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
-      style="--thumbnails-per-view-mobile: {{ section.settings.thumbnails_per_view_mobile }}; --thumbnails-per-view-desktop: {{ section.settings.thumbnails_per_view_desktop }};"
+      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
     >
       <button
         type="button"
