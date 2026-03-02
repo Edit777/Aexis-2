@@ -2344,6 +2344,27 @@
             "label": "Thumbnail carousel"
           }
         },
+        "desktop_thumbnails_position": {
+          "label": "Desktop thumbnails position",
+          "options__1": {
+            "label": "Left"
+          },
+          "options__2": {
+            "label": "Bottom"
+          },
+          "options__3": {
+            "label": "Right"
+          }
+        },
+        "desktop_horizontal_thumbnails_count": {
+          "label": "Desktop thumbnail count"
+        },
+        "desktop_vertical_thumbnails_width": {
+          "label": "Desktop thumbnail rail width"
+        },
+        "hide_vertical_thumbnail_arrows": {
+          "label": "Hide desktop vertical thumbnail arrows"
+        },
         "constrain_to_viewport": {
           "label": "Constrain to screen height"
         },

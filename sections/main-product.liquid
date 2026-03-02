@@ -2173,6 +2173,54 @@
     },
     {
       "type": "select",
+      "id": "desktop_thumbnails_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.main-product.settings.desktop_thumbnails_position.options__1.label"
+        },
+        {
+          "value": "bottom",
+          "label": "t:sections.main-product.settings.desktop_thumbnails_position.options__2.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.main-product.settings.desktop_thumbnails_position.options__3.label"
+        }
+      ],
+      "default": "bottom",
+      "label": "t:sections.main-product.settings.desktop_thumbnails_position.label"
+    },
+    {
+      "type": "range",
+      "id": "desktop_horizontal_thumbnails_count",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 5,
+      "label": "t:sections.main-product.settings.desktop_horizontal_thumbnails_count.label",
+      "visible_if": "{{ section.settings.desktop_thumbnails_position == 'bottom' }}"
+    },
+    {
+      "type": "range",
+      "id": "desktop_vertical_thumbnails_width",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "%",
+      "default": 16,
+      "label": "t:sections.main-product.settings.desktop_vertical_thumbnails_width.label",
+      "visible_if": "{{ section.settings.desktop_thumbnails_position != 'bottom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_vertical_thumbnail_arrows",
+      "default": false,
+      "label": "t:sections.main-product.settings.hide_vertical_thumbnail_arrows.label",
+      "visible_if": "{{ section.settings.desktop_thumbnails_position != 'bottom' }}"
+    },
+    {
+      "type": "select",
       "id": "mobile_thumbnails",
       "options": [
         {
