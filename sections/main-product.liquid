@@ -74,7 +74,7 @@
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
-    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} product--thumbnail-controls-{{ section.settings.thumbnail_navigation }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} product--thumbnail-controls-{{ section.settings.thumbnail_navigation }} product--media-pagination-{{ section.settings.media_pagination_type }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
@@ -2106,6 +2106,34 @@
       "content": "t:sections.main-product.settings.header.content"
     },
     {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "media_pagination_type",
+      "label": "Media pagination",
+      "options": [
+        {
+          "value": "thumbnails",
+          "label": "Thumbnails"
+        },
+        {
+          "value": "dots",
+          "label": "Dots"
+        },
+        {
+          "value": "counter",
+          "label": "Counter"
+        }
+      ],
+      "default": "thumbnails"
+    },
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
       "type": "select",
       "id": "media_size",
       "options": [
@@ -2173,26 +2201,6 @@
     },
     {
       "type": "select",
-      "id": "mobile_thumbnails",
-      "options": [
-        {
-          "value": "columns",
-          "label": "t:sections.main-product.settings.mobile_thumbnails.options__1.label"
-        },
-        {
-          "value": "show",
-          "label": "t:sections.main-product.settings.mobile_thumbnails.options__2.label"
-        },
-        {
-          "value": "hide",
-          "label": "t:sections.main-product.settings.mobile_thumbnails.options__3.label"
-        }
-      ],
-      "default": "hide",
-      "label": "t:sections.main-product.settings.mobile_thumbnails.label"
-    },
-    {
-      "type": "select",
       "id": "thumbnail_navigation",
       "label": "Thumbnail navigation",
       "options": [
@@ -2237,6 +2245,68 @@
     },
     {
       "type": "select",
+      "id": "media_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.main-product.settings.media_position.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.main-product.settings.media_position.options__2.label"
+        }
+      ],
+      "default": "left",
+      "label": "t:sections.main-product.settings.media_position.label"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_thumbnails",
+      "options": [
+        {
+          "value": "columns",
+          "label": "t:sections.main-product.settings.mobile_thumbnails.options__1.label"
+        },
+        {
+          "value": "show",
+          "label": "t:sections.main-product.settings.mobile_thumbnails.options__2.label"
+        },
+        {
+          "value": "hide",
+          "label": "t:sections.main-product.settings.mobile_thumbnails.options__3.label"
+        }
+      ],
+      "default": "hide",
+      "label": "t:sections.main-product.settings.mobile_thumbnails.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mobile_media_arrows",
+      "default": true,
+      "label": "Show media arrows"
+    },
+    {
+      "type": "select",
+      "id": "media_pagination_position",
+      "label": "Pagination position",
+      "options": [
+        {
+          "value": "below",
+          "label": "Below media"
+        },
+        {
+          "value": "overlay",
+          "label": "Overlay media"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "select",
       "id": "media_ratio_mobile",
       "label": "Mobile media ratio",
       "options": [
@@ -2258,22 +2328,6 @@
         }
       ],
       "default": "adapt"
-    },
-    {
-      "type": "select",
-      "id": "media_position",
-      "options": [
-        {
-          "value": "left",
-          "label": "t:sections.main-product.settings.media_position.options__1.label"
-        },
-        {
-          "value": "right",
-          "label": "t:sections.main-product.settings.media_position.options__2.label"
-        }
-      ],
-      "default": "left",
-      "label": "t:sections.main-product.settings.media_position.label"
     },
     {
       "type": "select",

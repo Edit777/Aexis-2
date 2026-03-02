@@ -33,6 +33,11 @@
     assign hide_mobile_slider = true
   endif
 
+  assign mobile_pagination_uses_thumbnails = false
+  if section.settings.media_pagination_type == 'thumbnails'
+    assign mobile_pagination_uses_thumbnails = true
+  endif
+
   if section.settings.media_size == 'large'
     assign media_width = 0.65
   elsif section.settings.media_size == 'medium'
@@ -138,7 +143,7 @@
         {%- endunless -%}
       {%- endfor -%}
     </ul>
-    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider %} small-hide{% endif %}{% unless show_media_prev_next %} product__media-controls--hide-arrows{% endunless %}{% if section.settings.media_pagination_position == 'overlay' %} product__media-controls--overlay{% endif %}">
+    <div class="slider-buttons quick-add-hidden{% if hide_mobile_slider or mobile_pagination_uses_thumbnails %} small-hide{% endif %}{% unless show_media_prev_next %} product__media-controls--hide-arrows{% endunless %}{% if section.settings.media_pagination_position == 'overlay' %} product__media-controls--overlay{% endif %}">
       <button
         type="button"
         class="slider-button slider-button--prev{% unless show_media_prev_next %} hidden{% endunless %}"
@@ -201,22 +206,25 @@
   {%- endif -%}
   {%- liquid
     assign is_not_limited_to_single_item = false
+    assign show_thumbnail_slider = false
     if limit == null or limit > 1
       assign is_not_limited_to_single_item = true
     endif
+
+    if is_not_limited_to_single_item and media_count > 1
+      if section.settings.gallery_layout contains 'thumbnail' or mobile_pagination_uses_thumbnails
+        assign show_thumbnail_slider = true
+      endif
+    endif
   -%}
-  {%- if is_not_limited_to_single_item
-    and media_count > 1
-    and section.settings.gallery_layout contains 'thumbnail'
-    or section.settings.mobile_thumbnails == 'show'
-  -%}
+  {%- if show_thumbnail_slider -%}
     <slider-component
       id="GalleryThumbnails-{{ section.id }}"
-      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% if section.settings.mobile_thumbnails != 'show' %} small-hide{% endif %}{% if media_count <= 3 %} thumbnail-slider--no-slide{% endif %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% endif %}"
+      class="thumbnail-slider slider-mobile-gutter quick-add-hidden{% unless section.settings.gallery_layout contains 'thumbnail' %} medium-hide large-up-hide{% endunless %}{% unless mobile_pagination_uses_thumbnails %} small-hide{% endunless %}{% if section.settings.thumbnail_navigation == 'always' %} thumbnail-slider--show-controls{% elsif section.settings.thumbnail_navigation == 'none' %} thumbnail-slider--hide-controls{% else %} thumbnail-slider--auto-controls{% endif %}"
     >
       <button
         type="button"
-        class="slider-button slider-button--prev{% unless section.settings.thumbnail_navigation == 'always' %}{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}{% endunless %}"
+        class="slider-button slider-button--prev"
         name="previous"
         aria-label="{{ 'general.slider.previous_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
@@ -346,7 +354,7 @@
       </ul>
       <button
         type="button"
-        class="slider-button slider-button--next{% unless section.settings.thumbnail_navigation == 'always' %}{% if media_count <= 3 %} small-hide{% endif %}{% if media_count <= 4 %} medium-hide large-up-hide{% endif %}{% endunless %}"
+        class="slider-button slider-button--next"
         name="next"
         aria-label="{{ 'general.slider.next_slide' | t }}"
         aria-controls="GalleryThumbnails-{{ section.id }}"
